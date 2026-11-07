@@ -17,4 +17,28 @@ jobs:
           java-version: '27'
           cache: maven
       - run: chmod +x mvnw
-      - run: ./mvnw -B test
+
+      - name: Run tests
+        run: ./mvnw -B test
+
+      - name: Build Allure report
+        if: always()
+        run: |
+          npm install -g allure
+          allure generate target/allure-results -o allure-report
+
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: allure-report
+          path: allure-report
+          retention-days: 14
+
+      - name: Upload Maven reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: surefire-reports
+          path: target/surefire-reports
+          retention-days: 14
