@@ -1,6 +1,4 @@
-import { defineConfig } from "allure";
-
-export default defineConfig({
+export default {
     name: "UI tests",
     plugins: {
         awesome: {
@@ -10,4 +8,4 @@ export default defineConfig({
             },
         },
     },
-});
+};
